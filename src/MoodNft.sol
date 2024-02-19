@@ -25,6 +25,7 @@ pragma solidity 0.8.20;
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
+import {Test, console} from "forge-std/Test.sol";
 
 contract MoodNft is ERC721, Ownable {
     error ERC721Metadata__URI_QueryFor_NonExistentToken();
@@ -53,7 +54,9 @@ contract MoodNft is ERC721, Ownable {
         // how would you require payment for this NFT?
         uint256 tokenCounter = s_tokenCounter;
         _safeMint(msg.sender, tokenCounter);
+        console.log(s_tokenCounter);
         s_tokenCounter = s_tokenCounter + 1;
+        console.log(s_tokenCounter);
         emit CreatedNFT(tokenCounter);
     }
 
@@ -64,9 +67,12 @@ contract MoodNft is ERC721, Ownable {
 
         if (s_tokenIdToState[tokenId] == NFTState.HAPPY) {
             s_tokenIdToState[tokenId] = NFTState.SAD;
-        } else {
+        } 
+        
+        else {
             s_tokenIdToState[tokenId] = NFTState.HAPPY;
         }
+        
     }
 
     function _baseURI() internal pure override returns (string memory) {
